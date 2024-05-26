@@ -71,7 +71,7 @@ client.on("interactionCreate", async (interaction) => {
 
       intervalId = setInterval(() => {
         interaction.channel.send(`${user}`);
-      }, 3000); // Pings every 3 seconds
+      }, 3000); // Pings every 3 seconds but you can change this. I would do at most 1 seccond to avoid ratelimiting
     } else {
       interaction.reply({
         content: `Already pinging ${user}`,
