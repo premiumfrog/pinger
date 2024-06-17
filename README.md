@@ -9,6 +9,7 @@ A simple Discord bot that pings a specified user until you run a stop command. M
 - Pings a user every few seconds
 - Stops pinging when you run the stop command
 - Built with `discord.js` and `node.js`
+- Ability to set it to your own userid to allow only you to initiate the pings
 
 ## Prerequisites
 
