@@ -7,6 +7,7 @@ const {
   Routes,
 } = require("discord.js");
 const { token, clientId, guildId } = require("./config.json");
+
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -18,11 +19,11 @@ const client = new Client({
 
 let pinging = false;
 let intervalId = null;
+
 client.once("ready", () => {
   console.log(`Logged in as ${client.user.tag}`);
 });
 
-// Registering slash commands
 const commands = [
   new SlashCommandBuilder()
     .setName("ping")
@@ -54,10 +55,21 @@ const rest = new REST({ version: "10" }).setToken(token);
   }
 })();
 
+const yourUserId = "1148829804527890483"; // Put your useridhere! 
+
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isCommand()) return;
 
-  const { commandName, options } = interaction;
+  const { commandName, options, user } = interaction;
+  const userId = user.id;
+
+  if (userId !== yourUserId) {
+    interaction.reply({
+      content: "You are not authorized to use this command.",
+      ephemeral: true,
+    });
+    return;
+  }
 
   if (commandName === "ping") {
     const user = options.getUser("target");
@@ -71,7 +83,7 @@ client.on("interactionCreate", async (interaction) => {
 
       intervalId = setInterval(() => {
         interaction.channel.send(`${user}`);
-      }, 3000); // Pings every 3 seconds but you can change this. I would do at most 1 seccond to avoid ratelimiting
+      }, 1000);
     } else {
       interaction.reply({
         content: `Already pinging ${user}`,
